@@ -1,5 +1,6 @@
 package com.alexandreyamasita.workshopmongo.services;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +15,7 @@ import com.alexandreyamasita.workshopmongo.services.exception.ObjectNotFoundExce
 @Service
 public class PostService {
 	
-	@Autowired   //injeção de dependencia automatica do SpringBoot
+	@Autowired   //injeção de dependência automatica do SpringBoot
 	private PostRepository repo;
 	
 	public Post findById(String id)
@@ -27,6 +28,12 @@ public class PostService {
 	{
 		//return repo.findByTitleContainingIgnoreCase(text);
 		return repo.searchTitle(text);
+	}
+	
+	public List<Post> FullSearch(String text, Date minDate, Date maxDate)
+	{
+		maxDate = new Date(maxDate.getTime() + 24 * 60 * 60 * 1000); 
+		return repo.FullSearch(text, minDate, maxDate);		
 	}
 
 }
